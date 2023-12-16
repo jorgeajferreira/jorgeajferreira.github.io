@@ -16,36 +16,113 @@
             max-width: 400px;
             margin: auto;
         }
+
+        #paypal-button, #terms-text {
+            display: none;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <img src="https://www.ps.place/static/img/Logo.png" width="90">
         <h2>Assinatura do pacote premium da PS Place</h2>
-        <p>Escolha uma das formas de pagamento abaixo para assinar:</p>
+        <p>Leia e concorde com os termos abaixo e escolha uma das formas de pagamento para assinar:</p>
         
+        <!-- Button to Toggle Terms and Conditions -->
+        <button onclick="toggleTerms()">Ler Termos e Condições</button>
+
+        <!-- Terms and Conditions Text -->
+        <div id="terms-text">
+            <p><strong>Termos e Condições:</strong></p>
+            <p>Estes Termos regem o uso do Pacote Premium fornecido pela PS Place. Ao usar o Pacote premium, você concorda em cumprir esses Termos e outras políticas estabelecidas pela Empresa.</p> 
+ 
+                <p><strong>Custos e Pagamentos:</strong></p>
+                <li>Uso do BOT: USD$35/mês.</li> 
+                <li>Pagamento antecipado mensal.</li> 
+                <li>Contrato mínimo: 12 meses.</li>
+                <li>Cancelamento antecipado requer aviso prévio de 30 dias e pagamento do ultimo mês via Zelle ou Paypal. </li>
+                 
+                <p><strong>Uso Responsável:</strong></p>
+                <li>Destinado apenas a uso empresarial.</li> 
+                <li>Responsabilidade do usuário por ações realizadas na conta.</li> 
+                <li>Proibido envio de conteúdo difamatório, ofensivo, pornográfico, discriminatório ou ilegal.</li> 
+                 
+                <p><strong>Anúncios Comerciais:</strong></p>
+                <li>PS Place pode exibir anúncios relevantes durante o uso do BOT.</li> 
+                <li>Anúncios não interferirão na experiência do usuário.</li> 
+                 
+                <p><strong>Isenção de Mensalidade para Clientes:</strong></p> 
+                <li>PS VIP isento da mensalidade após 6 pagamentos mensais.</li>
+                <li>Cliente que trouxer outras 3 Personais Shoppers para o pacote premium</li> 
+                <li>Cliente deve solicitar suspensão da cobrança formalmente.</li> 
+                 
+                <p><strong>Suspensão do Serviço por Falta de Pagamento:</strong></p> 
+                <li>Falta de pagamento resulta em suspensão imediata.</li> 
+                <li>Acesso será restabelecido após pagamento.</li> 
+                 
+                <p><strong>Disponibilidade e Suporte:</strong></p> 
+                <li>Esforço para manter BOT disponível.</li> 
+                <li>Suporte técnico fornecido durante o contrato.</li> 
+                 
+                <p><strong>Propriedade Intelectual:</strong></p> 
+                <li>Todos os direitos relacionados ao BOT pertencem à Empresa PS Place.</li> 
+                <li>Proibido copiar, reproduzir, modificar ou distribuir sem autorização.</li> 
+                 
+                <p><strong>Limitação de Responsabilidade:</strong></p> 
+                <li>Empresa não é responsável por danos decorrentes do uso do BOT.</li> 
+                <li>Não assume responsabilidade financeiras por falhas técnicas ou interrupções.</li> 
+                 
+                <p><strong>Alterações nos Termos:</strong></p>
+                <li>Empresa pode modificar os Termos a qualquer momento.</li>
+        </div>
+
+        <!-- Accept Terms Button -->
+        <div id="terms">
+            <button onclick="acceptTerms()">Concordo com os Termos e Condições</button>
+        </div>
+
         <!-- PayPal Button -->
-        <div id="paypal-button-container-P-16F34912X6818621JMVZBX7Y"></div>
-        <script src="https://www.paypal.com/sdk/js?client-id=AcpudsvqvvOXcMdD4-ZTiQRwiqYzWtAVE2hYNCrSC8uygbhIpsI-qW_sIYQLJhggcmOljcvSpCsM_LFo&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
-        <script>
-            paypal.Buttons({
-                style: {
-                    shape: 'pill',
-                    color: 'gold',
-                    layout: 'vertical',
-                    label: 'subscribe'
-                },
-                createSubscription: function(data, actions) {
-                    return actions.subscription.create({
-                        /* Creates the subscription */
-                        plan_id: 'P-16F34912X6818621JMVZBX7Y'
-                    });
-                },
-                onApprove: function(data, actions) {
-                    alert('Subscription completed! Your ID: ' + data.subscriptionID);
-                }
-            }).render('#paypal-button-container-P-16F34912X6818621JMVZBX7Y');
-        </script>
+        <div id="paypal-button">
+            <div id="paypal-button-container-P-16F34912X6818621JMVZBX7Y"></div>
+            <script src="https://www.paypal.com/sdk/js?client-id=AcpudsvqvvOXcMdD4-ZTiQRwiqYzWtAVE2hYNCrSC8uygbhIpsI-qW_sIYQLJhggcmOljcvSpCsM_LFo&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
+            <script>
+                paypal.Buttons({
+                    style: {
+                        shape: 'pill',
+                        color: 'gold',
+                        layout: 'vertical',
+                        label: 'subscribe'
+                    },
+                    createSubscription: function(data, actions) {
+                        return actions.subscription.create({
+                            /* Creates the subscription */
+                            plan_id: 'P-16F34912X6818621JMVZBX7Y'
+                        });
+                    },
+                    onApprove: function(data, actions) {
+                        alert('Subscription completed! Your ID: ' + data.subscriptionID);
+                    }
+                }).render('#paypal-button-container-P-16F34912X6818621JMVZBX7Y');
+            </script>
+        </div>
     </div>
+
+    <script>
+        function toggleTerms() {
+            var termsText = document.getElementById('terms-text');
+            if (termsText.style.display === 'none') {
+                termsText.style.display = 'block';
+            } else {
+                termsText.style.display = 'none';
+            }
+        }
+
+        function acceptTerms() {
+            document.getElementById('terms').style.display = 'none';
+            document.getElementById('terms-text').style.display = 'none';
+            document.getElementById('paypal-button').style.display = 'block';
+        }
+    </script>
 </body>
 </html>
+     
