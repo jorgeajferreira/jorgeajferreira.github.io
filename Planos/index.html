@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Tabela de Serviços</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .table-container {
+            overflow-x: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            background: white;
+        }
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 0;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #dddddd;
+        }
+        th {
+            background-color: #ff6384; /* Rosa forte para o cabeçalho da tabela */
+            color: white;
+            position: sticky;
+            top: 0;
+            box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
+        }
+        .pacote-basico {
+            background-color: #ffcad4; /* Rosa claro para Pacote Básico */
+        }
+        .pacote-premium {
+            background-color: #f8a1c4; /* Rosa médio para Pacote Premium */
+        }
+        .pacote-master {
+            background-color: #f472b6; /* Rosa escuro para Pacote Master */
+        }
+        .checkmark {
+            color: green;
+            font-weight: bold;
+        }
+        .cross {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Serviços</th>
+                    <th class="pacote-basico">Pacote Básico</th>
+                    <th class="pacote-premium">Pacote Premium</th>
+                    <th class="pacote-master">Pacote Master</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Cadastro de cliente(sistema de suítes)</td>
+                    <td class="pacote-basico checkmark">✔</td>
+                    <td class="pacote-premium checkmark">✔</td>
+                    <td class="pacote-master checkmark">✔</td>
+                </tr>
+                <tr>
+                    <td>Controle de estoque</td>
+                    <td class="pacote-basico checkmark">✔</td>
+                    <td class="pacote-premium checkmark">✔</td>
+                    <td class="pacote-master checkmark">✔</td>
+                </tr>
+                <tr>
+                    <td>Solicitação de envio feita pelo cliente</td>
+                    <td class="pacote-basico checkmark">✔</td>
+                    <td class="pacote-premium checkmark">✔</td>
+                    <td class="pacote-master checkmark">✔</td>
+                </tr>
+                <tr>
+                    <td>Envio de 3 tipos de orçamentos (Compra assistida/online/personal)</td>
+                    <td class="pacote-basico checkmark">✔</td>
+                    <td class="pacote-premium checkmark">✔</td>
+                    <td class="pacote-master checkmark">✔</td>
+                </tr>
+                <tr>
+                    <td>Grupo de Compras no sistema</td>
+                    <td class="pacote-basico checkmark">✔</td>
+                    <td class="pacote-premium checkmark">✔</td>
+                    <td class="pacote-master checkmark">✔</td>
+                </tr>
+                <tr>
+                    <td>Lojinha</td>
+                    <td class="pacote-basico checkmark">✔</td>
+                    <td class="pacote-premium checkmark">✔</td>
+                    <td class="pacote-master checkmark">✔</td>
+                </tr>
+                <tr>
+                    <td>Simulador de compra</td>
+                    <td class="pacote-basico checkmark">✔</td>
+                    <td class="pacote-premium checkmark">✔</td>
+                    <td class="pacote-master checkmark">✔</td>
+                </tr>
+                <tr>
+                    <td>Simulador de frete</td>
+                    <td class="pacote-basico checkmark">✔</td>
+                    <td class="pacote-premium checkmark">✔</td>
+                    <td class="pacote-master checkmark">✔</td>
+                </tr>
+                <tr>
+                    <td>Relatório Financeiro</td>
+                    <td class="pacote-basico checkmark">✔</td>
+                    <td class="pacote-premium checkmark">✔</td>
+                    <td class="pacote-master checkmark">✔</td>
+                </tr>
+                <tr>
+                    <td>Upgrade para PS VIP (Cashback + Pacote Premium sem custo)</td>
+                    <td class="pacote-basico checkmark">✔</td>
+                    <td class="pacote-premium checkmark">✔</td>
+                    <td class="pacote-master cross">✘</td>
+                </tr>
+                <tr>
+                    <td>Bot Telegram</td>
+                    <td class="pacote-basico cross">✘</td>
+                    <td class="pacote-premium checkmark">✔</td>
+                    <td class="pacote-master checkmark">✔</td>
+                </tr>
+                <tr>
+                    <td>Criação de novos serviços</td>
+                    <td class="pacote-basico cross">✘</td>
+                    <td class="pacote-premium checkmark">✔</td>
+                    <td class="pacote-master checkmark">✔</td>
+                </tr>
+                <tr>
+                    <td>Criar/Mudar forma de cobrança no Bot</td>
+                    <td class="pacote-basico cross">✘</td>
+                    <td class="pacote-premium checkmark">✔</td>
+                    <td class="pacote-master checkmark">✔</td>
+                </tr>
+                <tr>
+                    <td>Integração com as transportadoras</td>
+                    <td class="pacote-basico cross">✘</td>
+                    <td class="pacote-premium checkmark">✔</td>
+                    <td class="pacote-master checkmark">✔</td>
+                </tr>
+                <tr>
+                    <td>Isenção da cobrança de 2% do cliente</td>
+                    <td class="pacote-basico cross">✘</td>
+                    <td class="pacote-premium cross">✘</td>
+                    <td class="pacote-master checkmark">✔</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
