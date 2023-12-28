@@ -129,6 +129,8 @@
                     },
                     onApprove: function(data, actions) {
                         alert('Subscription completed! Your ID: ' + data.subscriptionID);
+                        // Redirect the user to the specified page after successful subscription
+                        window.location.href = 'Obrigado/index.html';
                     }
                 }).render('#paypal-button-container-P-82V101874D4120940MV4JO7A');
             </script>
