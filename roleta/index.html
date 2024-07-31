@@ -12,9 +12,11 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
             height: 100vh;
-            background-image: url('https://i.imgur.com/AZGljzB.jpg');
+            background-image: url('https://cdn.pixabay.com/photo/2017/03/06/20/54/casino-2122904_960_720.jpg');
             background-size: cover;
+            background-position: center;
             color: #fff;
         }
         .container {
@@ -25,10 +27,14 @@
             max-width: 400px;
             width: 100%;
         }
+        .input-group {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+        }
         input {
             width: 50px;
             padding: 10px;
-            margin: 5px;
             text-align: center;
             border-radius: 5px;
             border: 1px solid #ccc;
@@ -49,13 +55,32 @@
             margin-top: 20px;
             font-weight: bold;
         }
+        .roulette-container {
+            position: relative;
+            margin-top: 20px;
+        }
+        .roulette {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background-image: url('https://cdn.pixabay.com/photo/2018/08/30/20/53/roulette-3648224_960_720.png');
+            background-size: cover;
+        }
+        .marker {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: red;
+            border: 2px solid white;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Roleta Analysis</h1>
         <p>Enter the last 5 numbers:</p>
-        <div id="inputs">
+        <div id="inputs" class="input-group">
             <input type="number" id="num1">
             <input type="number" id="num2">
             <input type="number" id="num3">
@@ -64,6 +89,10 @@
         </div>
         <button onclick="analyzeNumbers()">Analyze</button>
         <div class="result" id="result"></div>
+    </div>
+
+    <div class="roulette-container">
+        <div class="roulette" id="roulette"></div>
     </div>
 
     <script>
@@ -85,7 +114,6 @@
             let dezenas = { 'Primeira': 0, 'Segunda': 0, 'Terceira': 0 };
 
             for (let num of numbers) {
-                // Analyzing columns
                 if ([1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34].includes(num)) {
                     colunas['Primeira']++;
                 } else if ([2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35].includes(num)) {
@@ -94,7 +122,6 @@
                     colunas['Terceira']++;
                 }
 
-                // Analyzing dozens
                 if (num >= 1 && num <= 12) {
                     dezenas['Primeira']++;
                 } else if (num >= 13 && num <= 24) {
@@ -104,7 +131,6 @@
                 }
             }
 
-            // Determine the best suggestion based on the highest count
             let maiorContagemColuna = Math.max(colunas['Primeira'], colunas['Segunda'], colunas['Terceira']);
             let maiorContagemDuzia = Math.max(dezenas['Primeira'], dezenas['Segunda'], dezenas['Terceira']);
 
@@ -129,23 +155,63 @@
                 sugestao = 'Aguarde mais números';
             }
 
-            // Display the suggestion
             document.getElementById('result').innerText = sugestao;
 
-            // Shift numbers 3 cells down
-            shiftNumbers(numbers);
+            // Show positions on the roulette
+            showRoulettePositions(numbers);
         }
 
-        function shiftNumbers(numbers) {
-            for (let i = 0; i < 2; i++) {
-                document.getElementById('num' + (i + 1)).value = '';
-            }
-            for (let i = 0; i < 3; i++) {
-                document.getElementById('num' + (i + 1)).value = numbers[i + 2];
-            }
-            for (let i = 3; i < 5; i++) {
-                document.getElementById('num' + (i + 1)).value = '';
-            }
+        function showRoulettePositions(numbers) {
+            const positions = {
+                1: { top: 70, left: 140 },
+                2: { top: 40, left: 170 },
+                3: { top: 20, left: 210 },
+                4: { top: 10, left: 250 },
+                5: { top: 20, left: 290 },
+                6: { top: 40, left: 330 },
+                7: { top: 70, left: 360 },
+                8: { top: 110, left: 380 },
+                9: { top: 150, left: 390 },
+                10: { top: 190, left: 380 },
+                11: { top: 230, left: 360 },
+                12: { top: 260, left: 330 },
+                13: { top: 280, left: 290 },
+                14: { top: 290, left: 250 },
+                15: { top: 280, left: 210 },
+                16: { top: 260, left: 170 },
+                17: { top: 230, left: 140 },
+                18: { top: 190, left: 120 },
+                19: { top: 150, left: 110 },
+                20: { top: 110, left: 120 },
+                21: { top: 70, left: 140 },
+                22: { top: 40, left: 170 },
+                23: { top: 20, left: 210 },
+                24: { top: 10, left: 250 },
+                25: { top: 20, left: 290 },
+                26: { top: 40, left: 330 },
+                27: { top: 70, left: 360 },
+                28: { top: 110, left: 380 },
+                29: { top: 150, left: 390 },
+                30: { top: 190, left: 380 },
+                31: { top: 230, left: 360 },
+                32: { top: 260, left: 330 },
+                33: { top: 280, left: 290 },
+                34: { top: 290, left: 250 },
+                35: { top: 280, left: 210 },
+                36: { top: 260, left: 170 }
+            };
+
+            // Clear previous markers
+            const roulette = document.getElementById('roulette');
+            roulette.innerHTML = ''; // Clear previous markers if any
+            numbers.forEach(num => {
+                const pos = positions[num];
+                const marker = document.createElement('div');
+                marker.className = 'marker';
+                marker.style.top = pos.top + 'px';
+                marker.style.left = pos.left + 'px';
+                roulette.appendChild(marker);
+            });
         }
     </script>
 </body>
