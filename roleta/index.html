@@ -7,131 +7,91 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
             height: 100vh;
-            background-image: url('https://images.unsplash.com/photo-1568667256549-094345857637');
-            background-size: cover;
-            color: #fff;
+            background-color: #ddd;
+            color: #333;
         }
-        .container {
-            background: rgba(0, 0, 0, 0.7);
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            max-width: 400px;
-            width: 100%;
-        }
-        input {
-            width: 50px;
+        input, button {
             padding: 10px;
             margin: 5px;
-            text-align: center;
             border-radius: 5px;
             border: 1px solid #ccc;
         }
         button {
-            padding: 10px 20px;
-            margin-top: 10px;
+            cursor: pointer;
             background-color: #4CAF50;
             color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
         }
-        button:hover {
-            background-color: #45a049;
-        }
-        .result {
-            margin-top: 20px;
-            font-weight: bold;
+        .hidden {
+            display: none;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Roleta Analysis</h1>
-        <p>Enter the last 5 numbers:</p>
-        <div id="inputs">
-            <input type="number" id="num1">
-            <input type="number" id="num2">
-            <input type="number" id="num3">
-            <input type="number" id="num4">
-            <input type="number" id="num5">
-        </div>
-        <button onclick="analyzeNumbers()">Analyze</button>
-        <div class="result" id="result"></div>
+    <div>
+        <input type="number" id="num1" placeholder="First Number" min="1" max="36">
+        <input type="number" id="num2" placeholder="Second Number" min="1" max="36">
+        <button onclick="processNumbers()">Process</button>
     </div>
+    <div id="thirdNumberSection" class="hidden">
+        <input type="number" id="num3" placeholder="Third Number" min="1" max="36" oninput="showSpinButton()">
+    </div>
+    <div id="spinButton" class="hidden">
+        <button onclick="spinAndAnalyze()">Spin</button>
+    </div>
+    <div id="result"></div>
 
     <script>
-        function analyzeNumbers() {
-            let numbers = [];
-            for (let i = 1; i <= 5; i++) {
-                let num = parseInt(document.getElementById('num' + i).value);
-                if (!isNaN(num)) {
-                    numbers.push(num);
-                    document.getElementById('num' + i).readOnly = true;  // Make the inputs readonly after analyzing
-                }
-            }
+        function getColumn(num) {
+            return (num % 3 === 0) ? 3 : num % 3;
+        }
 
-            if (numbers.length < 5) {
-                document.getElementById('result').innerText = 'Please enter all 5 numbers.';
-                return;
-            }
+        function getDozen(num) {
+            return Math.ceil(num / 12);
+        }
 
-            let colunas = { 'Primeira': 0, 'Segunda': 0, 'Terceira': 0 };
-            let dezenas = { 'Primeira': 0, 'Segunda': 0, 'Terceira': 0 };
+        let basedOnColumn = true;
 
-            for (let num of numbers) {
-                // Analyzing columns
-                if ([1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34].includes(num)) {
-                    colunas['Primeira']++;
-                } else if ([2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35].includes(num)) {
-                    colunas['Segunda']++;
-                } else if ([3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36].includes(num)) {
-                    colunas['Terceira']++;
-                }
+        function processNumbers() {
+            const num1 = parseInt(document.getElementById('num1').value);
+            const num2 = parseInt(document.getElementById('num2').value);
 
-                // Analyzing dozens
-                if (num >= 1 && num <= 12) {
-                    dezenas['Primeira']++;
-                } else if (num >= 13 && num <= 24) {
-                    dezenas['Segunda']++;
-                } else if (num >= 25 && num <= 36) {
-                    dezenas['Terceira']++;
-                }
-            }
-
-            // Determine the best suggestion based on the highest count
-            let maiorContagemColuna = Math.max(colunas['Primeira'], colunas['Segunda'], colunas['Terceira']);
-            let maiorContagemDuzia = Math.max(dezenas['Primeira'], dezenas['Segunda'], dezenas['Terceira']);
-
-            let sugestao = '';
-            if (maiorContagemDuzia > maiorContagemColuna) {
-                if (dezenas['Primeira'] >= 3) {
-                    sugestao = 'DUZIA: 2 E 3';
-                } else if (dezenas['Segunda'] >= 3) {
-                    sugestao = 'DUZIA: 1 E 3';
-                } else if (dezenas['Terceira'] >= 3) {
-                    sugestao = 'DUZIA: 1 E 2';
-                }
-            } else if (maiorContagemColuna > maiorContagemDuzia) {
-                if (colunas['Primeira'] >= 3) {
-                    sugestao = 'COLUNA: 2 E 3';
-                } else if (colunas['Segunda'] >= 3) {
-                    sugestao = 'COLUNA: 1 E 3';
-                } else if (colunas['Terceira'] >= 3) {
-                    sugestao = 'COLUNA: 1 E 2';
-                }
+            if (getColumn(num1) === getColumn(num2)) {
+                basedOnColumn = true;
+                document.getElementById('thirdNumberSection').classList.remove('hidden');
+                document.getElementById('result').innerText = "Processamento concluído. Insira o terceiro número.";
+            } else if (getDozen(num1) === getDozen(num2)) {
+                basedOnColumn = false;
+                document.getElementById('thirdNumberSection').classList.remove('hidden');
+                document.getElementById('result').innerText = "Processamento concluído. Insira o terceiro número.";
             } else {
-                sugestao = 'Aguarde mais números';
+                document.getElementById('result').innerText = "Espere mais números para iniciar.";
+                document.getElementById('thirdNumberSection').classList.add('hidden');
+                document.getElementById('spinButton').classList.add('hidden');
             }
+        }
 
-            // Display the suggestion
-            document.getElementById('result').innerText = sugestao;
+        function showSpinButton() {
+            const num3 = document.getElementById('num3').value;
+            if (num3.length > 0) {
+                document.getElementById('spinButton').classList.remove('hidden');
+            } else {
+                document.getElementById('spinButton').classList.add('hidden');
+            }
+        }
+
+        function spinAndAnalyze() {
+            const num3 = parseInt(document.getElementById('num3').value);
+            const colOrDozValue = basedOnColumn ? getColumn(num3) : getDozen(num3);
+            const allValues = [1, 2, 3];
+            let remainingValues = allValues.filter(value => value !== colOrDozValue);
+
+            let resultText = `Jogar em: ${basedOnColumn ? 'Coluna' : 'Dúzia'} ${remainingValues.join(' e ')}.`;
+            document.getElementById('result').innerText = resultText;
         }
     </script>
 </body>
