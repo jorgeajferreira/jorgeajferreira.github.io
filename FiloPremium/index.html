@@ -110,31 +110,13 @@
             <button class="btn btn-large" onclick="acceptTerms()">Concordo com os Termos e Condições</button>
         </div>
 
-        <!-- PayPal Button -->
-        <div id="paypal-button">
-            <div id="paypal-button-container-P-8CU74128UX9872923MXXA4MQ"></div>
-            <script src="https://www.paypal.com/sdk/js?client-id=AcpudsvqvvOXcMdD4-ZTiQRwiqYzWtAVE2hYNCrSC8uygbhIpsI-qW_sIYQLJhggcmOljcvSpCsM_LFo&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
-            <script>
-                paypal.Buttons({
-                    style: {
-                        shape: 'pill',
-                        color: 'gold',
-                        layout: 'vertical',
-                        label: 'subscribe'
-                    },
-                    createSubscription: function(data, actions) {
-                        return actions.subscription.create({
-                            /* Creates the subscription */
-                            plan_id: 'P-8CU74128UX9872923MXXA4MQ'
-                        });
-                    },
-                    onApprove: function(data, actions) {
-                        //alert('Subscription completed! Your ID: ' + data.subscriptionID);
-                        // Redirect the user to the specified page after successful subscription
-                        window.location.href = 'https://jorgeajferreira.github.io/Obrigado/';
-                    }
-                }).render('#paypal-button-container-P-8CU74128UX9872923MXXA4MQ');
-            </script>
+        <!-- Stripe Button -->
+        <div id="stripe-button">
+            <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+            <stripe-buy-button
+                buy-button-id="buy_btn_1QGPZOA1HmcAI6kbtRCC8Plf"
+                publishable-key="pk_live_51PVfEAA1HmcAI6kbr68wrVSOAvKodluM2gouegregmaEeubGPC5AmQEHTkoyC2aJrHLljZtv7KvffsYB2pwGfZDY005NbLeND5">
+            </stripe-buy-button>
         </div>
     </div>
 
@@ -151,9 +133,8 @@
         function acceptTerms() {
             document.getElementById('terms').style.display = 'none';
             document.getElementById('terms-text').style.display = 'none';
-            document.getElementById('paypal-button').style.display = 'block';
+            document.getElementById('stripe-button').style.display = 'block';
         }
     </script>
 </body>
 </html>
-     
