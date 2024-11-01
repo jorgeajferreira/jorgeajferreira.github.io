@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>PayPal Subscription</title>
+    <title>PS Place Subscription</title>
     <!-- Viewport Meta Tag for Responsive Design -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
@@ -18,31 +18,31 @@
             text-align: center;
         }
 
-        #paypal-button, #terms-text {
+        #stripe-button, #terms-text {
             display: none;
         }
 
         #terms-text {
-            text-align: left; /* Align text to the left */
+            text-align: left;
         }
         
         .btn {
-            padding: 10px 10px; /* Default size for buttons */
+            padding: 10px 10px;
             cursor: pointer;
-            border-radius: 20px; /* Circular corners for buttons */
+            border-radius: 20px;
             border: none;
             color: white;
-            background-color: #f8527c; /* Bootstrap primary color */
+            background-color: #f8527c;
             font-size: 16px;
             margin: 10px;
         }
 
         .btn-large {
-            padding: 20px 40px; /* Double the padding for larger button */
-            border-radius: 20px; /* Circular corners for buttons */
+            padding: 20px 40px;
+            border-radius: 20px;
             border: none;
             color: white;
-            background-color: #f8527c; /* Bootstrap primary color */
+            background-color: #f8527c;
             font-size: 16px;
             margin: 10px;
         }
@@ -104,36 +104,19 @@
                 <ol>9.2. É responsabilidade do usuário revisar periodicamente estes Termos para estar ciente de quaisquer alterações.</ol>
         </div>
 
+
         <!-- Accept Terms Button -->
         <div id="terms">
             <button class="btn btn-large" onclick="acceptTerms()">Concordo com os Termos e Condições</button>
         </div>
 
-        <!-- PayPal Button -->
-        <div id="paypal-button">
-            <div id="paypal-button-container-P-82V101874D4120940MV4JO7A"></div>
-            <script src="https://www.paypal.com/sdk/js?client-id=AcpudsvqvvOXcMdD4-ZTiQRwiqYzWtAVE2hYNCrSC8uygbhIpsI-qW_sIYQLJhggcmOljcvSpCsM_LFo&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
-            <script>
-                paypal.Buttons({
-                    style: {
-                        shape: 'pill',
-                        color: 'gold',
-                        layout: 'vertical',
-                        label: 'subscribe'
-                    },
-                    createSubscription: function(data, actions) {
-                        return actions.subscription.create({
-                            /* Creates the subscription */
-                            plan_id: 'P-82V101874D4120940MV4JO7A'
-                        });
-                    },
-                    onApprove: function(data, actions) {
-                        //alert('Subscription completed! Your ID: ' + data.subscriptionID);
-                        // Redirect the user to the specified page after successful subscription
-                        window.location.href = 'https://jorgeajferreira.github.io/Obrigado/';
-                    }
-                }).render('#paypal-button-container-P-82V101874D4120940MV4JO7A');
-            </script>
+        <!-- Stripe Button -->
+        <div id="stripe-button">
+            <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+            <stripe-buy-button
+                buy-button-id="buy_btn_1QGLDsA1HmcAI6kbQ0wwJXKX"
+                publishable-key="pk_live_51PVfEAA1HmcAI6kbr68wrVSOAvKodluM2gouegregmaEeubGPC5AmQEHTkoyC2aJrHLljZtv7KvffsYB2pwGfZDY005NbLeND5">
+            </stripe-buy-button>
         </div>
     </div>
 
@@ -150,9 +133,8 @@
         function acceptTerms() {
             document.getElementById('terms').style.display = 'none';
             document.getElementById('terms-text').style.display = 'none';
-            document.getElementById('paypal-button').style.display = 'block';
+            document.getElementById('stripe-button').style.display = 'block';
         }
     </script>
 </body>
 </html>
-     
