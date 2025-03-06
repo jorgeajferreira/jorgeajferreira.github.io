@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>PayPal Subscription</title>
+    <title>PS Place Subscription</title>
     <!-- Viewport Meta Tag for Responsive Design -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
@@ -18,36 +18,53 @@
             text-align: center;
         }
 
-        #paypal-button, #terms-text {
+        #stripe-button, #terms-text {
             display: none;
         }
 
         #terms-text {
-            text-align: left; /* Align text to the left */
+            text-align: left;
         }
         
         .btn {
-            padding: 10px 10px; /* Default size for buttons */
+            padding: 10px 10px;
             cursor: pointer;
-            border-radius: 20px; /* Circular corners for buttons */
+            border-radius: 20px;
             border: none;
             color: white;
-            background-color: #f8527c; /* Bootstrap primary color */
+            background-image: linear-gradient(to right, #f8527c, #f78be8); /* Gradiente rosa ajustado */
             font-size: 16px;
             margin: 10px;
         }
 
         .btn-large {
-            padding: 20px 40px; /* Double the padding for larger button */
-            border-radius: 20px; /* Circular corners for buttons */
+            padding: 20px 40px;
+            border-radius: 20px;
             border: none;
             color: white;
-            background-color: #f8527c; /* Bootstrap primary color */
+            background-image: linear-gradient(to right, #f8527c, #f78be8); /* Gradiente rosa ajustado */
             font-size: 16px;
             margin: 10px;
         }
     </style>
 </head>
+        <!-- Meta Pixel Code -->
+        <script>
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '1089060609226813');
+            fbq('trackCustom', 'PremiumView');
+        </script>
+            <noscript><img height="1" width="1" style="display:none"
+            src="https://www.facebook.com/tr?id=1089060609226813&ev=PageView&noscript=1"
+        /></noscript>
+        <!-- End Meta Pixel Code -->
 <body>
     <div class="container">
         <img src="https://www.ps.place/static/img/Logo.png" width="90">
@@ -105,36 +122,19 @@
                 <ol>9.2. É responsabilidade do usuário revisar periodicamente estes Termos para estar ciente de quaisquer alterações.</ol>
         </div>
 
+
         <!-- Accept Terms Button -->
         <div id="terms">
             <button class="btn btn-large" onclick="acceptTerms()">Concordo com os Termos e Condições</button>
         </div>
 
-        <!-- PayPal Button -->
-        <div id="paypal-button">
-            <div id="paypal-button-container-P-16F34912X6818621JMVZBX7Y"></div>
-            <script src="https://www.paypal.com/sdk/js?client-id=AcpudsvqvvOXcMdD4-ZTiQRwiqYzWtAVE2hYNCrSC8uygbhIpsI-qW_sIYQLJhggcmOljcvSpCsM_LFo&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
-            <script>
-                paypal.Buttons({
-                    style: {
-                        shape: 'pill',
-                        color: 'gold',
-                        layout: 'vertical',
-                        label: 'subscribe'
-                    },
-                    createSubscription: function(data, actions) {
-                        return actions.subscription.create({
-                            /* Creates the subscription */
-                            plan_id: 'P-16F34912X6818621JMVZBX7Y'
-                        });
-                    },
-                    onApprove: function(data, actions) {
-                        //alert('Subscription completed! Your ID: ' + data.subscriptionID);
-                        // Redirect the user to the specified page after successful subscription
-                        window.location.href = 'https://jorgeajferreira.github.io/Obrigado/';
-                    }
-                }).render('#paypal-button-container-P-16F34912X6818621JMVZBX7Y');
-            </script>
+        <!-- Stripe Button -->
+        <div id="stripe-button">
+            <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+            <stripe-buy-button
+                buy-button-id="buy_btn_1QGKsjA1HmcAI6kbLkvueRXF"
+                publishable-key="pk_live_51PVfEAA1HmcAI6kbr68wrVSOAvKodluM2gouegregmaEeubGPC5AmQEHTkoyC2aJrHLljZtv7KvffsYB2pwGfZDY005NbLeND5">
+            </stripe-buy-button>
         </div>
     </div>
 
@@ -151,9 +151,8 @@
         function acceptTerms() {
             document.getElementById('terms').style.display = 'none';
             document.getElementById('terms-text').style.display = 'none';
-            document.getElementById('paypal-button').style.display = 'block';
+            document.getElementById('stripe-button').style.display = 'block';
         }
     </script>
 </body>
 </html>
-     
